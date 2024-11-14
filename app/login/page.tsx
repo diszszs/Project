@@ -1,22 +1,30 @@
+// app/login/page.tsx
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function Login() {
+export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const router = useRouter();
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    const res = await fetch('/api/auth/login', {
+    
+    const res = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
+
     const data = await res.json();
+    
     if (res.ok) {
+      // เก็บ token ลงใน local storage หรือ cookies
+      localStorage.setItem('token', data.token);
       setMessage('Login successful!');
-      // เพิ่มโค้ดเพื่อนำผู้ใช้ไปที่หน้า Dashboard
+      router.push('/dashboard'); // ส่งไปยังหน้า dashboard
     } else {
       setMessage(data.error || 'Login failed');
     }

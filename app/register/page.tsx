@@ -1,23 +1,23 @@
 "use client";
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function Register() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
-    const res = await fetch('/api/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
     const data = await res.json();
     if (res.ok) {
-      setMessage('Registration successful!');
+      setMessage("Registration successful!");
     } else {
-      setMessage(data.error || 'Registration failed');
+      setMessage(data.error || "Registration failed");
     }
   }
 
