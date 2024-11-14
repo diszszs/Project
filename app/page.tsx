@@ -1,26 +1,47 @@
+'use client'; // Marking this as a client component
+
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function HomePage() {
+  const [showAuthMenu, setShowAuthMenu] = useState(false); // state to control the visibility of the menu
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-between">
       {/* Header */}
       <header className="flex justify-end p-6 space-x-4">
-        {/* Navigation Buttons */}
-        <Link href="/dashboard/news" passHref>
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-yellow-600">
-            Latest News
-          </button>
-        </Link>
-        <Link href="/dashboard/players" passHref>
+        {/* United Store Button */}
+        <Link href="/united-store" passHref>
           <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
-            Player Management
+            United Store
           </button>
         </Link>
-        <Link href="/dashboard/admin" passHref>
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-green-600">
-            Admin Dashboard
+
+        {/* Sign In Button */}
+        <div className="relative">
+          <button
+            className="px-4 py-2 bg-gray-700 text-white font-semibold rounded hover:bg-gray-600"
+            onClick={() => setShowAuthMenu(!showAuthMenu)} // Toggle menu visibility on button click
+          >
+            Sign In
           </button>
-        </Link>
+
+          {/* Auth Dropdown Menu */}
+          {showAuthMenu && (
+            <div className="absolute top-full right-0 mt-2 w-40 bg-black bg-opacity-90 rounded-md shadow-lg z-10">
+              <Link href="/login" passHref>
+                <button className="w-full text-left px-4 py-2 text-white hover:bg-blue-600 rounded-t-md">
+                  Log In
+                </button>
+              </Link>
+              <Link href="/register" passHref>
+                <button className="w-full text-left px-4 py-2 text-white hover:bg-blue-600 rounded-b-md">
+                  Sign Up
+                </button>
+              </Link>
+            </div>
+          )}
+        </div>
       </header>
 
       {/* Content in the Centered Half */}
@@ -38,21 +59,48 @@ export default function HomePage() {
         <p className="text-md mt-2 mb-8">Stay updated with the latest news, manage player info, and more.</p>
 
         {/* Latest Match Score Section */}
-        <div className="bg-black bg-opacity-60 p-6 rounded-lg text-white w-full max-w-md">
-          <h2 className="text-2xl font-bold mb-4">Latest Match Score</h2>
-          <div className="flex justify-between items-center text-lg font-semibold">
-            <span>Manchester United</span>
-            <span className="text-yellow-400">2 - 1</span>
-            <span>Chelsea FC</span>
+        <section className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
+          <h2 className="text-3xl font-semibold mb-4">Latest Matches</h2>
+          <div className="overflow-x-auto">
+            <table className="table-auto w-full">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 text-left">Date</th>
+                  <th className="px-4 py-2 text-left">Match</th>
+                  <th className="px-4 py-2 text-left">Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="bg-gray-800">
+                  <td className="px-4 py-2">Nov 10, 2024</td>
+                  <td className="px-4 py-2">Manchester United vs Leicester</td>
+                  <td className="px-4 py-2 text-yellow-400">3 - 0</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2">Nov 3, 2024</td>
+                  <td className="px-4 py-2">Manchester United vs Chelsea</td>
+                  <td className="px-4 py-2 text-yellow-400">1 - 1</td>
+                </tr>
+                <tr className="bg-gray-800">
+                  <td className="px-4 py-2">Oct 31, 2024</td>
+                  <td className="px-4 py-2">Manchester United vs Leicester</td>
+                  <td className="px-4 py-2 text-yellow-400">5 - 2</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2">Nov 24, 2024</td>
+                  <td className="px-4 py-2">Ipswich vs Manchester United</td>
+                  <td className="px-4 py-2 text-yellow-400">11:30 PM</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <p className="mt-2 text-gray-300">Premier League - 6 Nov 2024</p>
-        </div>
-      </main>
+        </section>
 
-      {/* Footer */}
-      <footer className="text-center p-4">
-        <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
-      </footer>
+        {/* Footer */}
+        <footer className="text-center p-4">
+          <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
+        </footer>
+      </main>
     </div>
   );
 }

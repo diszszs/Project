@@ -31,28 +31,44 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      <form onSubmit={handleLogin} className="flex flex-col space-y-4">
+    <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-center items-center">
+      {/* Logo */}
+      <img
+        src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg"
+        alt="Manchester United Logo"
+        width={150}
+        height={150}
+        className="mb-8"
+      />
+      <h1 className="text-5xl font-bold mb-4">Login</h1>
+      <form onSubmit={handleLogin} className="w-full max-w-md space-y-4">
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="p-2 border border-gray-300 rounded"
+          className="w-full p-3 border border-gray-300 rounded-md text-black"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="p-2 border border-gray-300 rounded"
+          className="w-full p-3 border border-gray-300 rounded-md text-black"
         />
-        <button type="submit" className="p-2 bg-blue-500 text-white rounded">
+        <button
+          type="submit"
+          className="w-full py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-yellow-600"
+        >
           Login
         </button>
       </form>
-      {message && <p className="mt-4">{message}</p>}
+      {message && <p className="mt-4 text-lg">{message}</p>}
+
+      {/* Footer */}
+      <footer className="text-center p-4 mt-8">
+        <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
