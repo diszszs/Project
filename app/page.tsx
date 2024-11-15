@@ -20,7 +20,7 @@ export default function HomePage() {
         {/* Sign In Button */}
         <div className="relative">
           <button
-            className="px-4 py-2 bg-gray-700 text-white font-semibold rounded hover:bg-gray-600"
+            className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-gray-600"
             onClick={() => setShowAuthMenu(!showAuthMenu)} // Toggle menu visibility on button click
           >
             Sign In
@@ -44,8 +44,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Content in the Centered Half */}
-      <main className="flex-grow flex flex-col items-center justify-start text-center pt-20">
+      <main className="flex-grow flex flex-col items-center justify-start text-center pt-0"> 
         {/* Logo */}
         <img
           src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg"
@@ -55,8 +54,23 @@ export default function HomePage() {
           className="mb-4"
         />
         <h1 className="text-5xl font-bold mb-4">Manchester United Fan Page</h1>
-        <p className="text-lg">Welcome to the ultimate Manchester United fan site!</p>
-        <p className="text-md mt-2 mb-8">Stay updated with the latest news, manage player info, and more.</p>
+        <p className="text-lg mb-8">Welcome to the ultimate Manchester United fan site! Stay updated with the latest news, manage player info, and more.</p>
+
+        {/* Club Overview Section */}
+        <section className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
+          <h2 className="text-3xl font-semibold mb-4">About Manchester United</h2>
+          <div className="flex flex-col items-center justify-center">
+            <p className="mb-4">Manchester United Football Club is one of the most iconic and successful football clubs in the world, founded in 1878. Known for its legendary history, Manchester United has a rich legacy of domestic and international successes.</p>
+            <img
+              src="https://wallpaperaccess.com/full/4295830.jpg"
+              alt="Old Trafford"
+              width={600}
+              height={400}
+              className="rounded-lg mb-4"
+            />
+            <p className="text-lg font-semibold">Old Trafford – The Theatre of Dreams</p>
+          </div>
+        </section>
 
         {/* Latest Match Score Section */}
         <section className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
@@ -71,6 +85,11 @@ export default function HomePage() {
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td className="px-4 py-2">Nov 24, 2024</td>
+                  <td className="px-4 py-2">Ipswich vs Manchester United</td>
+                  <td className="px-4 py-2 text-yellow-400">11:30 PM</td>
+                </tr>
                 <tr className="bg-gray-800">
                   <td className="px-4 py-2">Nov 10, 2024</td>
                   <td className="px-4 py-2">Manchester United vs Leicester</td>
@@ -86,13 +105,27 @@ export default function HomePage() {
                   <td className="px-4 py-2">Manchester United vs Leicester</td>
                   <td className="px-4 py-2 text-yellow-400">5 - 2</td>
                 </tr>
-                <tr>
-                  <td className="px-4 py-2">Nov 24, 2024</td>
-                  <td className="px-4 py-2">Ipswich vs Manchester United</td>
-                  <td className="px-4 py-2 text-yellow-400">11:30 PM</td>
-                </tr>
               </tbody>
             </table>
+          </div>
+        </section>
+
+        {/* Trophies Section */}
+        <section className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
+          <h2 className="text-3xl font-semibold mb-4">A Legendary Track Record</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Trophies Image */}
+            <div className="bg-white p-4 rounded-lg shadow-lg">
+              <img
+                src="https://static0.givemesportimages.com/wordpress/wp-content/uploads/2024/05/manchester-united-fa-cup.jpg"
+                alt="Manchester United Trophies"
+                width={400}
+                height={400}
+                className="object-contain mb-4"
+              />
+              <h3 className="text-xl font-semibold text-gray-800">Manchester United Trophies</h3>
+              <p className="text-gray-600">The Emirates FA Cup winner!!</p>
+            </div>
           </div>
         </section>
 
