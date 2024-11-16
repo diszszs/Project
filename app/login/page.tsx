@@ -1,4 +1,3 @@
-// app/login/page.tsx
 "use client";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -11,7 +10,7 @@ export default function LoginPage() {
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    
+
     const res = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -19,12 +18,12 @@ export default function LoginPage() {
     });
 
     const data = await res.json();
-    
+
     if (res.ok) {
-      // เก็บ token ลงใน local storage หรือ cookies
+      // Save token in localStorage or cookies
       localStorage.setItem('token', data.token);
       setMessage('Login successful!');
-      router.push('/dashboard'); // ส่งไปยังหน้า dashboard
+      router.push('/dashboard'); // Redirect to the dashboard
     } else {
       setMessage(data.error || 'Login failed');
     }

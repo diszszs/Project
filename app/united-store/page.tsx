@@ -1,9 +1,15 @@
-// app/united-store/page.tsx
-'use client'; // Required if you're using useState or other hooks
+'use client'; // Marking this as a client component
 
+import { useState } from 'react';
 import Link from 'next/link';
 
 export default function UnitedStore() {
+  const [cartItems, setCartItems] = useState<{ name: string, price: number }[]>([]);
+
+  const addToCart = (item: { name: string, price: number }) => {
+    setCartItems(prevItems => [...prevItems, item]);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col">
       {/* Header */}
@@ -14,18 +20,11 @@ export default function UnitedStore() {
             Home
           </button>
         </Link>
-        
-        {/* Latest News Link */}
-        <Link href="/dashboard/news">
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
-            Latest News
-          </button>
-        </Link>
 
-        {/* Player Management Link */}
-        <Link href="/dashboard/players">
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-green-600">
-            Player Management
+        {/* Cart Link */}
+        <Link href="/cart">
+          <button className="px-4 py-2 bg-yellow-600 text-white font-semibold rounded hover:bg-yellow-700">
+            Cart ({cartItems.length})
           </button>
         </Link>
       </header>
@@ -36,41 +35,43 @@ export default function UnitedStore() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 w-full max-w-7xl">
           {/* Home Jersey */}
-          <div className="bg-white p-4 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+          <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
             <img
               src="https://mufc-live.cdn.scayle.cloud/images/032465a23bed509d050589e6439809a2.jpg"
               alt="Home Jersey"
-              width={400}
-              height={400}
-              className="object-contain mb-4"
+              className="object-contain mb-4 rounded-lg"
             />
-            <h2 className="text-xl font-semibold text-gray-800">Manchester United Home Jersey</h2>
-            <p className="text-gray-600">Size: M, L, XL</p>
-            <p className="text-2xl font-semibold text-yellow-400">฿2,590.00</p>
-            <Link href="/united-store/home-jersey">
-              <button className="mt-4 w-full py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-700">
-                Home Jersey
-              </button>
-            </Link>
+            <h2 className="text-2xl font-semibold text-gray-800">Home Jersey</h2>
+            <p className="text-gray-600 mb-4">Size: M, L, XL</p>
+            <p className="text-3xl font-semibold text-yellow-400 mb-6">฿2,590.00</p>
+
+            {/* Add to Cart Button */}
+            <button
+              onClick={() => addToCart({ name: 'Home Jersey', price: 2590 })}
+              className="w-full py-3 bg-red-600 text-white font-semibold rounded hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              Add to Cart
+            </button>
           </div>
 
           {/* Away Jersey */}
-          <div className="bg-white p-4 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+          <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
             <img
               src="https://mufc-live.cdn.scayle.cloud/images/6324d5baa6aaf2f6110f14523e0d29ce.jpg?brightness=1&width=576&height=768&quality=75&bg=ffffff"
               alt="Away Jersey"
-              width={400}
-              height={400}
-              className="object-contain mb-4"
+              className="object-contain mb-4 rounded-lg"
             />
-            <h2 className="text-xl font-semibold text-gray-800">Manchester United Away Jersey</h2>
-            <p className="text-gray-600">Size: M, L, XL</p>
-            <p className="text-2xl font-semibold text-yellow-400">฿2,765.00</p>
-            <Link href="/united-store/away-jersey">
-              <button className="mt-4 w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700">
-                Away Jersey
-              </button>
-            </Link>
+            <h2 className="text-2xl font-semibold text-gray-800">Away Jersey</h2>
+            <p className="text-gray-600 mb-4">Size: M, L, XL</p>
+            <p className="text-3xl font-semibold text-yellow-400 mb-6">฿2,765.00</p>
+
+            {/* Add to Cart Button */}
+            <button
+              onClick={() => addToCart({ name: 'Away Jersey', price: 2765 })}
+              className="w-full py-3 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
       </main>

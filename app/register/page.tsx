@@ -1,25 +1,30 @@
-"use client"; // เพิ่มบรรทัดนี้เพื่อให้แน่ใจว่าใช้ client-side rendering
-
-import { useState } from "react";
-import Link from 'next/link'; // การใช้ Link อย่างถูกต้อง
+"use client";
+import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [message, setMessage] = useState('');
 
+  // Handle the form submission for registration
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
+
     const res = await fetch("/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ firstName, lastName, email, password }),
     });
+
     const data = await res.json();
+    
     if (res.ok) {
-      setMessage("Registration successful!");
+      setMessage('Registration successful!');
     } else {
-      setMessage(data.error || "Registration failed");
+      setMessage(data.error || 'Registration failed');
     }
   }
 
@@ -57,6 +62,20 @@ export default function Register() {
         />
         <h1 className="text-5xl font-bold mb-4">Register</h1>
         <form onSubmit={handleRegister} className="flex flex-col space-y-4 w-full max-w-md">
+          <input
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className="p-2 border border-gray-300 rounded text-black"
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className="p-2 border border-gray-300 rounded text-black"
+          />
           <input
             type="email"
             placeholder="Email"

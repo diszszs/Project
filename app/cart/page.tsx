@@ -1,0 +1,57 @@
+'use client'; // Marking this as a client component
+
+import { useState } from 'react';
+import Link from 'next/link';
+
+export default function Cart() {
+  // For simplicity, I will use static cart items here; you can use context or a global state to manage cart state across pages
+  const [cartItems, setCartItems] = useState<{ name: string, price: number }[]>([
+    { name: 'Home Jersey', price: 2590 },
+    { name: 'Away Jersey', price: 2765 }
+  ]);
+  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col">
+      {/* Header */}
+      <header className="flex justify-end p-6 space-x-4">
+        <Link href="/" passHref>
+          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-yellow-600">
+            Home
+          </button>
+        </Link>
+      </header>
+
+      {/* Cart Section */}
+      <main className="flex-grow flex flex-col items-center justify-center text-center py-16">
+        <h1 className="text-5xl font-bold mb-8 text-white">Your Cart</h1>
+
+        <div className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
+          <h2 className="text-3xl font-semibold mb-4">Items in Cart</h2>
+          <ul className="list-none mb-8">
+            {cartItems.map((item, index) => (
+              <li key={index} className="flex justify-between mb-4">
+                <span>{item.name}</span>
+                <span>฿{item.price}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="flex justify-between mb-8">
+            <span className="text-xl font-semibold">Total:</span>
+            <span className="text-xl font-semibold text-yellow-400">฿{total}</span>
+          </div>
+          <Link href="/checkout">
+            <button className="w-full py-3 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition duration-300 ease-in-out transform hover:scale-105">
+              Proceed to Checkout
+            </button>
+          </Link>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="text-center p-4 mt-auto">
+        <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+}

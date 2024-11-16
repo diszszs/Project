@@ -1,24 +1,30 @@
 import { NextResponse } from "next/server";
-import prisma from "@/app/utils/db";
-import bcrypt from "bcryptjs";
+import prisma from "@/app/utils/db"; // Ensure the correct path to your db connection
+import bcrypt from "bcryptjs"; // For hashing passwords
 
 export async function POST(request: Request) {
-  const data = await request.json();
-  const hashedPassword = await bcrypt.hash(data.password, 10);
+  const { firstName, lastName, email, password } = await request.json();
+
+  // Set role to 'admin' if email matches the specific one, otherwise 'user'
+  const role = email === 'Hadis@gmail.com' ? 'admin' : 'user';
 
   try {
-    const newUser = await prisma.user.create({
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create user in the database
+    const user = await prisma.user.create({
       data: {
-        email: data.email,
+        firstName,
+        lastName,
+        email,
         password: hashedPassword,
-        role: "user", // กำหนด role เริ่มต้นเป็น "user"
+        role: role, // Set role dynamically based on email
       },
     });
-    return NextResponse.json(newUser);
+
+    return NextResponse.json({ message: 'Registration successful' });
   } catch (error) {
-    return NextResponse.json(
-      { error: "User already exists or invalid data." },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Registration failed' }, { status: 400 });
   }
 }
