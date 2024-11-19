@@ -1,30 +1,62 @@
 import { NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
 import prisma from "@/app/utils/db"; // Ensure the correct path to your db connection
-import bcrypt from "bcryptjs"; // For hashing passwords
+import { generateToken } from "@/app/utils/jwt"; // JWT utility
+import { z } from "zod"; // Import Zod for validation
+
+// Define Zod schema for validation
+const registerSchema = z.object({
+  email: z.string().email("Invalid email format").min(1, "Email is required"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+});
 
 export async function POST(request: Request) {
-  const { firstName, lastName, email, password } = await request.json();
+  const body = await request.json();
 
-  // Set role to 'admin' if email matches the specific one, otherwise 'user'
-  const role = email === 'Hadis@gmail.com' ? 'admin' : 'user';
+  // Validate the incoming data using Zod
+  const validationResult = registerSchema.safeParse(body);
+
+  if (!validationResult.success) {
+    // Return validation errors if any
+    return NextResponse.json(
+      { error: validationResult.error.format() },
+      { status: 400 }
+    );
+  }
+
+  const { email, password, firstName, lastName } = validationResult.data;
 
   try {
-    // Hash the password before saving
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      return NextResponse.json({ error: "User already exists" }, { status: 400 });
+    }
+
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user in the database
-    const user = await prisma.user.create({
+    // Create new user
+    const newUser = await prisma.user.create({
       data: {
-        firstName,
-        lastName,
         email,
         password: hashedPassword,
-        role: role, // Set role dynamically based on email
+        firstName,
+        lastName,
+        role: email === "Hadis@gmail.com" ? "admin" : "user", // Assign admin role if email matches
       },
     });
 
-    return NextResponse.json({ message: 'Registration successful' });
+    // Generate JWT token
+    const token = generateToken(newUser);
+
+    return NextResponse.json({ message: "Registration successful", token });
   } catch (error) {
-    return NextResponse.json({ error: 'Registration failed' }, { status: 400 });
+    return NextResponse.json({ error: "Registration failed" }, { status: 500 });
   }
 }
