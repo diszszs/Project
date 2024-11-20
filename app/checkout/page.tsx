@@ -1,17 +1,32 @@
 'use client'; // Marking this as a client component
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState('');
-  const [showSuccessModal, setShowSuccessModal] = useState(false); // New state to control the modal visibility
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [cartItems, setCartItems] = useState<{ name: string, price: number }[]>([]);
+
+  useEffect(() => {
+    // Get the cart items from localStorage
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      setCartItems(JSON.parse(storedCart));
+    }
+  }, []);
+
+  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   const handlePaymentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentMethod(event.target.value);
   };
 
   const handleCheckout = () => {
+    if (!paymentMethod) {
+      alert('Please choose a payment method.');
+      return;
+    }
     setShowSuccessModal(true); // Show the modal after successful payment
   };
 
@@ -51,7 +66,7 @@ export default function Checkout() {
               />
               <label htmlFor="credit-card">Credit Card</label>
             </div>
-            <div className="flex items-center mb-8">
+            <div className="flex items-center mb-4">
               <input
                 type="radio"
                 id="paypal"
@@ -63,6 +78,14 @@ export default function Checkout() {
               />
               <label htmlFor="paypal">PayPal</label>
             </div>
+          </div>
+
+          {/* Error message if no payment method is selected */}
+          {!paymentMethod && <p className="text-red-500">Please choose a payment method.</p>}
+
+          {/* Total Price Display */}
+          <div className="mb-8">
+            <p className="text-xl font-semibold">Total Price: ฿{total}</p>
           </div>
 
           <button

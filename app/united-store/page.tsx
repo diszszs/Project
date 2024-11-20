@@ -54,7 +54,7 @@ export default function UnitedStore() {
             {/* Add to Cart Button */}
             <button
               onClick={() => addToCart({ name: 'Home Jersey', price: 2590 })}
-              className="w-full py-3 bg-red-600 text-white font-semibold rounded hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105"
+              className="w-full py-3 bg-red-600 text-white font-semibold rounded hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
             >
               Add to Cart
             </button>
@@ -74,7 +74,27 @@ export default function UnitedStore() {
             {/* Add to Cart Button */}
             <button
               onClick={() => addToCart({ name: 'Away Jersey', price: 2765 })}
-              className="w-full py-3 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
+              className="w-full py-3 bg-red-600 text-white font-semibold rounded hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              Add to Cart
+            </button>
+          </div>
+
+          {/* Third Jersey Kid */}
+          <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+            <img
+              src="https://mufc-live.cdn.scayle.cloud/images/9d8b1e35abd676645560a4bce2b86dca.jpg?brightness=1&width=1536&height=2048&quality=75&bg=ffffff" 
+              alt="Third Jersey Kid"
+              className="object-contain mb-4 rounded-lg"
+            />
+            <h2 className="text-2xl font-semibold text-gray-800">Third Jersey Kid</h2>
+            <p className="text-gray-600 mb-4">Size: S, M, L</p>
+            <p className="text-3xl font-semibold text-yellow-400 mb-6">฿2,199.00</p>
+
+            {/* Add to Cart Button */}
+            <button
+              onClick={() => addToCart({ name: 'Third Jersey Kid', price: 2280 })}
+              className="w-full py-3 bg-red-600 text-white font-semibold rounded hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
             >
               Add to Cart
             </button>
