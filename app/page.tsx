@@ -110,11 +110,11 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Trophies Section */}
+        {/* Trophies Section with 3 boxes */}
         <section className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
           <h2 className="text-3xl font-semibold mb-4">A Legendary Track Record</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Trophies Image */}
+            {/* Trophies Box 1 */}
             <div className="bg-white p-4 rounded-lg shadow-lg">
               <img
                 src="https://static0.givemesportimages.com/wordpress/wp-content/uploads/2024/05/manchester-united-fa-cup.jpg"
@@ -124,13 +124,37 @@ export default function HomePage() {
                 className="object-contain mb-4"
               />
               <h3 className="text-xl font-semibold text-gray-800">Manchester United Trophies</h3>
-              <p className="text-gray-600">The Emirates FA Cup winner!!</p>
+              <p className="text-gray-600">The Emirates FA Cup winner 2023/24 season!!</p>
+            </div>
+            {/* Trophies Box 2 */}
+            <div className="bg-white p-4 rounded-lg shadow-lg">
+              <img
+                src="https://th.bing.com/th/id/R.36b9ab4e41c8056d334e28f8735986b5?rik=hf6YVR658P5fPg&riu=http%3a%2f%2fplatform-static-files.s3.amazonaws.com%2fpremierleague%2fphoto%2f2016%2f06%2f01%2f0e39ca26-dd5b-4974-920c-60a45b2d65a0%2fman-utd-champions-2007-2008.jpg&ehk=xVgcgqK31p1kxfneyaOndlkDT0bbHvpOuGmtYVJyY8A%3d&risl=&pid=ImgRaw&r=0"
+                alt="Premier League Trophies"
+                width={400}
+                height={400}
+                className="object-contain mb-4"
+              />
+              <h3 className="text-xl font-semibold text-gray-800">Premier League Champions</h3>
+              <p className="text-gray-600">Manchester United's Premier League 2007/08 victories!</p>
+            </div>
+            {/* Trophies Box 3 */}
+            <div className="bg-white p-4 rounded-lg shadow-lg">
+              <img
+                src="https://th.bing.com/th/id/R.5d525f495a9bcae2a7fc3f5b14e6f6a6?rik=jB1QgEtlkk1HLg&pid=ImgRaw&r=0"
+                alt="Champions League Trophies"
+                width={400}
+                height={400}
+                className="object-contain mb-4"
+              />
+              <h3 className="text-xl font-semibold text-gray-800">UEFA Champions League</h3>
+              <p className="text-gray-600">Manchester United's historic Champions League 2007/08 wins!</p>
             </div>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="text-center p-4">
+        <footer className="text-center p-4 mt-auto">
           <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
         </footer>
       </main>

@@ -4,10 +4,16 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 export default function UnitedStore() {
-  const [cartItems, setCartItems] = useState<{ name: string, price: number }[]>([]);
+  const [cartItems, setCartItems] = useState<{ name: string, price: number }[]>(
+    JSON.parse(localStorage.getItem('cart') || '[]') // Retrieve cart items from localStorage
+  );
 
   const addToCart = (item: { name: string, price: number }) => {
-    setCartItems(prevItems => [...prevItems, item]);
+    const updatedCart = [...cartItems, item];
+    setCartItems(updatedCart);
+
+    // Store updated cart items in localStorage
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
   return (
@@ -23,7 +29,7 @@ export default function UnitedStore() {
 
         {/* Cart Link */}
         <Link href="/cart">
-          <button className="px-4 py-2 bg-yellow-600 text-white font-semibold rounded hover:bg-yellow-700">
+          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-yellow-700">
             Cart ({cartItems.length})
           </button>
         </Link>

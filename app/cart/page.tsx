@@ -1,15 +1,28 @@
 'use client'; // Marking this as a client component
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function Cart() {
-  // For simplicity, I will use static cart items here; you can use context or a global state to manage cart state across pages
-  const [cartItems, setCartItems] = useState<{ name: string, price: number }[]>([
-    { name: 'Home Jersey', price: 2590 },
-    { name: 'Away Jersey', price: 2765 }
-  ]);
+  const [cartItems, setCartItems] = useState<{ name: string, price: number }[]>([]);
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      setCartItems(JSON.parse(storedCart));
+    }
+  }, []);
+
   const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+
+  // Function to delete an item from the cart
+  const deleteItem = (itemToDelete: { name: string, price: number }) => {
+    const updatedCart = cartItems.filter(item => item !== itemToDelete);
+    setCartItems(updatedCart);
+
+    // Save the updated cart to localStorage
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col">
@@ -29,12 +42,23 @@ export default function Cart() {
         <div className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
           <h2 className="text-3xl font-semibold mb-4">Items in Cart</h2>
           <ul className="list-none mb-8">
-            {cartItems.map((item, index) => (
-              <li key={index} className="flex justify-between mb-4">
-                <span>{item.name}</span>
-                <span>฿{item.price}</span>
-              </li>
-            ))}
+            {cartItems.length === 0 ? (
+              <p className="text-white">Your cart is empty.</p>
+            ) : (
+              cartItems.map((item, index) => (
+                <li key={index} className="flex justify-between mb-4">
+                  <span>{item.name}</span>
+                  <span>฿{item.price}</span>
+                  {/* Delete Button */}
+                  <button
+                    onClick={() => deleteItem(item)}
+                    className="text-red-600 hover:text-red-800"
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))
+            )}
           </ul>
           <div className="flex justify-between mb-8">
             <span className="text-xl font-semibold">Total:</span>
