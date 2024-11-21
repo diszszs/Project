@@ -1,84 +1,37 @@
-"use client";
-import { useState, useEffect } from 'react';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
-type News = {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-};
-
-export default function ManageNews() {
-  const [newsList, setNewsList] = useState<News[]>([]);
-  const [newArticle, setNewArticle] = useState({ title: '', content: '', author: '' });
-
-  useEffect(() => {
-    async function fetchNews() {
-      const res = await fetch('/api/news');
-      const data = await res.json();
-      setNewsList(data);
-    }
-    fetchNews();
-  }, []);
-
-  async function addNews() {
-    const res = await fetch('/api/news', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newArticle),
-    });
-    if (res.ok) {
-      const addedArticle = await res.json();
-      setNewsList([...newsList, addedArticle]);
-      setNewArticle({ title: '', content: '', author: '' });
-    }
-  }
-
-  async function deleteNews(id: number) {
-    const res = await fetch(`/api/news/${id}`, { method: 'DELETE' });
-    if (res.ok) {
-      setNewsList(newsList.filter((article) => article.id !== id));
-    }
-  }
-
+export default function NewsDashboard() {
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-8 text-center">Manage News</h1>
-      
-      <ul className="space-y-4 mb-8">
-        {newsList.map((article) => (
-          <li key={article.id} className="p-4 border rounded-lg bg-white shadow flex justify-between items-center">
-            <span className="text-lg font-medium">{article.title} - {article.author}</span>
-            <button onClick={() => deleteNews(article.id)} className="text-red-500 hover:text-red-600 transition ease-in-out duration-200">Delete</button>
-          </li>
-        ))}
-      </ul>
-
-      <div className="bg-white p-6 rounded-lg shadow-md space-y-4">
-        <input
-          type="text"
-          placeholder="Title"
-          value={newArticle.title}
-          onChange={(e) => setNewArticle({ ...newArticle, title: e.target.value })}
-          className="p-3 border rounded w-full"
-        />
-        <textarea
-          placeholder="Content"
-          value={newArticle.content}
-          onChange={(e) => setNewArticle({ ...newArticle, content: e.target.value })}
-          className="p-3 border rounded w-full h-32"
-        />
-        <input
-          type="text"
-          placeholder="Author"
-          value={newArticle.author}
-          onChange={(e) => setNewArticle({ ...newArticle, author: e.target.value })}
-          className="p-3 border rounded w-full"
-        />
-        <button onClick={addNews} className="p-3 bg-blue-500 text-white rounded w-full hover:bg-blue-600 transition ease-in-out duration-200">
-          Add News
-        </button>
-      </div>
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <Navbar />
+      <main className="flex-grow container mx-auto p-6">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Manage News</h1>
+        <p className="text-gray-600">
+          This section allows you to manage news articles.
+        </p>
+        <div className="bg-white shadow-md rounded-lg p-6 mt-6">
+          <h2 className="text-lg font-bold text-gray-800">Add New Article</h2>
+          <form className="mt-4">
+            <input
+              type="text"
+              placeholder="Title"
+              className="w-full mb-4 px-4 py-2 border rounded"
+            />
+            <textarea
+              placeholder="Content"
+              className="w-full mb-4 px-4 py-2 border rounded"
+            ></textarea>
+            <button
+              type="submit"
+              className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Save
+            </button>
+          </form>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }

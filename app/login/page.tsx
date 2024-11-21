@@ -20,10 +20,17 @@ export default function LoginPage() {
     const data = await res.json();
 
     if (res.ok) {
-      // Save token in localStorage or cookies
-      localStorage.setItem('token', data.token);
+      // Save token and role in cookies
+      document.cookie = `token=${data.token}; path=/; max-age=3600`; // 1 hour
+      document.cookie = `role=${data.role}; path=/; max-age=3600`;
+
       setMessage('Login successful!');
-      router.push('/dashboard'); // Redirect to the dashboard
+      
+      if (data.role === 'admin') {
+        router.push('/dashboard'); // Redirect admin to dashboard
+      } else {
+        router.push('/'); // Redirect user to the home page
+      }
     } else {
       setMessage(data.error || 'Login failed');
     }

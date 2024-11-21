@@ -1,46 +1,38 @@
-// app/dashboard/page.tsx
-"use client"; // เพิ่มบรรทัดนี้ที่ด้านบนสุดเพื่อให้ไฟล์นี้เป็น Client Component
-
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation"; // ใช้ next/navigation สำหรับการเปลี่ยนเส้นทางใน client component
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 export default function Dashboard() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  // ตรวจสอบสถานะของผู้ใช้
-  useEffect(() => {
-    if (status === "loading") return; // รอโหลดข้อมูล session
-    if (status === "unauthenticated" || session?.user?.role !== "admin") {
-      router.push("/login"); // ถ้าไม่ใช่ admin ให้ส่งไปหน้า login
-    }
-  }, [status, session, router]);
-
-  if (status === "loading") {
-    return <p>Loading...</p>; // แสดงข้อความ Loading ระหว่างรอข้อมูล session
-  }
-
-  if (session?.user?.role !== "admin") {
-    return null; // ถ้าไม่ใช่ admin ให้ไม่แสดงเนื้อหาใด ๆ
-  }
+  const userName = "Admin User"; // ตัวอย่าง: ต้องดึงจาก session หรือ API
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-8 text-gray-800">Dashboard</h1>
-      <div className="w-full max-w-md space-y-4">
-        <Link href="/dashboard/news">
-          <div className="block p-6 border rounded-lg bg-black text-white hover:bg-blue-600 transition ease-in-out duration-200">
-            <h2 className="text-2xl font-semibold">Manage News</h2>
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <Navbar userName={userName} />
+      <main className="flex-grow container mx-auto p-6">
+        <h1 className="text-4xl font-bold text-gray-800 mb-6">Welcome to the Dashboard</h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h2 className="text-xl font-semibold text-gray-800">Manage News</h2>
+            <p className="text-gray-600 mt-2">Add, update, or delete news articles.</p>
+            <a
+              href="/dashboard/news"
+              className="inline-block mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Go to News
+            </a>
           </div>
-        </Link>
-        <Link href="/dashboard/players">
-          <div className="block p-6 border rounded-lg bg-red-500 text-white hover:bg-green-600 transition ease-in-out duration-200">
-            <h2 className="text-2xl font-semibold">Manage Players</h2>
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h2 className="text-xl font-semibold text-gray-800">Manage Players</h2>
+            <p className="text-gray-600 mt-2">Add, update, or delete player profiles.</p>
+            <a
+              href="/dashboard/players"
+              className="inline-block mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Go to Players
+            </a>
           </div>
-        </Link>
-      </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }
