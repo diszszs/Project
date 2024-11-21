@@ -1,6 +1,5 @@
 "use client";
 import { useState } from 'react';
-import Link from 'next/link';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -31,23 +30,8 @@ export default function Register() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-between">
       {/* Header */}
-      <header className="flex justify-end p-6 space-x-4">
-        {/* Navigation Buttons */}
-        <Link href="/dashboard/news">
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-yellow-600">
-            Latest News
-          </button>
-        </Link>
-        <Link href="/dashboard/players">
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
-            Player Management
-          </button>
-        </Link>
-        <Link href="/dashboard/admin">
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-green-600">
-            Admin Dashboard
-          </button>
-        </Link>
+      <header className="p-6 text-center">
+        <h1 className="text-5xl font-bold">Register</h1>
       </header>
 
       {/* Content in the Centered Half */}
@@ -60,7 +44,6 @@ export default function Register() {
           height={150}
           className="mb-6"
         />
-        <h1 className="text-5xl font-bold mb-4">Register</h1>
         <form onSubmit={handleRegister} className="flex flex-col space-y-4 w-full max-w-md">
           <input
             type="text"

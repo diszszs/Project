@@ -25,7 +25,14 @@ export async function POST(request: Request) {
     // Generate JWT token
     const token = generateToken(user);
 
-    return NextResponse.json({ message: "Login successful", token });
+    // Return role to determine access level
+    return NextResponse.json({
+      message: "Login successful",
+      token,
+      role: user.role, // Send the user's role
+      firstName: user.firstName, // Include first name
+      lastName: user.lastName, // Include last name
+    });
   } catch (error) {
     return NextResponse.json({ error: "Login failed" }, { status: 500 });
   }

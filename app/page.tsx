@@ -162,4 +162,3 @@ export default function HomePage() {
   );
 }
 
-//Admin view can add the leastest result for the page it must have the date/match/score
