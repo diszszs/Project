@@ -117,7 +117,19 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
+      {/* Navbar */}
       <Navbar userName="Admin" />
+
+      {/* Home Button */}
+      <div className="flex justify-start p-6">
+        <a
+          href="/"
+          className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition"
+        >
+          Home
+        </a>
+      </div>
+
       <main className="flex-grow container mx-auto p-6">
         <h1 className="text-4xl font-bold text-gray-800 mb-6">Dashboard</h1>
 
