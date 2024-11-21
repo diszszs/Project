@@ -121,7 +121,7 @@ export default function LoginPage() {
         alt="Manchester United Logo"
         width={150}
         height={150}
-        className="mb-8"
+        className="mb-2"
       />
       <h1 className="text-5xl font-bold mb-4">Login</h1>
       <form onSubmit={handleUserLogin} className="w-full max-w-md space-y-4">

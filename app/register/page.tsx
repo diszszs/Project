@@ -29,10 +29,6 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-between">
-      {/* Header */}
-      <header className="p-6 text-center">
-        <h1 className="text-5xl font-bold">Register</h1>
-      </header>
 
       {/* Content in the Centered Half */}
       <main className="flex-grow flex flex-col items-center justify-start text-center pt-20">
@@ -42,8 +38,12 @@ export default function Register() {
           alt="Manchester United Logo"
           width={150}
           height={150}
-          className="mb-6"
+          className="mb-0"
         />
+        <header className="p-6 text-center">
+        <h1 className="text-5xl font-bold">Register</h1>
+        </header>
+
         <form onSubmit={handleRegister} className="flex flex-col space-y-4 w-full max-w-md">
           <input
             type="text"

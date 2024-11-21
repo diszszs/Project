@@ -2,7 +2,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export default function Dashboard() {
-  const userName = "Admin User"; // ตัวอย่าง: ต้องดึงจาก session หรือ API
+  const userName = "Admin"; 
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
