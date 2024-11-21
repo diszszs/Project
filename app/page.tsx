@@ -1,10 +1,38 @@
 'use client'; // Marking this as a client component
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+type Match = {
+  id: number;
+  date: string; // ISO string for the date
+  teams: string;
+  score: string;
+};
 
 export default function HomePage() {
   const [showAuthMenu, setShowAuthMenu] = useState(false); // state to control the visibility of the menu
+  const [matches, setMatches] = useState<Match[]>([]); // state to hold matches
+
+  // Fetch matches when the page loads
+  useEffect(() => {
+    async function fetchMatches() {
+      try {
+        const res = await fetch('/api/matches');
+        const data = await res.json();
+
+        if (res.ok) {
+          setMatches(data);
+        } else {
+          console.error('Failed to fetch matches');
+        }
+      } catch (error) {
+        console.error('Error fetching matches:', error);
+      }
+    }
+
+    fetchMatches();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-between">
@@ -44,7 +72,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="flex-grow flex flex-col items-center justify-start text-center pt-0"> 
+      <main className="flex-grow flex flex-col items-center justify-start text-center pt-0">
         {/* Logo */}
         <img
           src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg"
@@ -54,13 +82,19 @@ export default function HomePage() {
           className="mb-4"
         />
         <h1 className="text-5xl font-bold mb-4">Manchester United Fan Page</h1>
-        <p className="text-lg mb-8">Welcome to the ultimate Manchester United fan site! Stay updated with the latest news, manage player info, and more.</p>
+        <p className="text-lg mb-8">
+          Welcome to the ultimate Manchester United fan site! Stay updated with the latest news, manage player info, and more.
+        </p>
 
         {/* Club Overview Section */}
         <section className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
           <h2 className="text-3xl font-semibold mb-4">About Manchester United</h2>
           <div className="flex flex-col items-center justify-center">
-            <p className="mb-4">Manchester United Football Club is one of the most iconic and successful football clubs in the world, founded in 1878. Known for its legendary history, Manchester United has a rich legacy of domestic and international successes.</p>
+            <p className="mb-4">
+              Manchester United Football Club is one of the most iconic and successful football clubs in the world, founded
+              in 1878. Known for its legendary history, Manchester United has a rich legacy of domestic and international
+              successes.
+            </p>
             <img
               src="https://wallpaperaccess.com/full/4295830.jpg"
               alt="Old Trafford"
@@ -85,26 +119,13 @@ export default function HomePage() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="px-4 py-2">Nov 24, 2024</td>
-                  <td className="px-4 py-2">Ipswich vs Manchester United</td>
-                  <td className="px-4 py-2 text-yellow-400">11:30 PM</td>
-                </tr>
-                <tr className="bg-gray-800">
-                  <td className="px-4 py-2">Nov 10, 2024</td>
-                  <td className="px-4 py-2">Manchester United vs Leicester</td>
-                  <td className="px-4 py-2 text-yellow-400">3 - 0</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2">Nov 3, 2024</td>
-                  <td className="px-4 py-2">Manchester United vs Chelsea</td>
-                  <td className="px-4 py-2 text-yellow-400">1 - 1</td>
-                </tr>
-                <tr className="bg-gray-800">
-                  <td className="px-4 py-2">Oct 31, 2024</td>
-                  <td className="px-4 py-2">Manchester United vs Leicester</td>
-                  <td className="px-4 py-2 text-yellow-400">5 - 2</td>
-                </tr>
+                {matches.map((match, index) => (
+                  <tr key={match.id} className={index % 2 === 0 ? 'bg-gray-800' : ''}>
+                    <td className="px-4 py-2">{new Date(match.date).toLocaleDateString()}</td>
+                    <td className="px-4 py-2">{match.teams}</td>
+                    <td className="px-4 py-2 text-yellow-400">{match.score}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -161,4 +182,3 @@ export default function HomePage() {
     </div>
   );
 }
-
