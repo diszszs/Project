@@ -38,7 +38,13 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-between">
       {/* Header */}
       <header className="flex justify-end p-6 space-x-4">
-        {/* United Store Button */}
+        {/* News Page Button */}
+        <Link href="/news" passHref>
+          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
+            News Page
+          </button>
+        </Link>
+
         <Link href="/united-store" passHref>
           <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
             United Store

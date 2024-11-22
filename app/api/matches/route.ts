@@ -18,6 +18,11 @@ export async function POST(request: Request) {
   try {
     const { date, teams, score } = await request.json();
 
+    // Ensure valid date format
+    if (!date || !teams || !score) {
+      return NextResponse.json({ error: 'Date, teams, and score are required' }, { status: 400 });
+    }
+
     const match = await prisma.match.create({
       data: {
         date: new Date(date),
@@ -37,8 +42,8 @@ export async function PUT(request: Request) {
   try {
     const { id, date, teams, score } = await request.json();
 
-    if (!id) {
-      return NextResponse.json({ error: 'Match ID is required' }, { status: 400 });
+    if (!id || !date || !teams || !score) {
+      return NextResponse.json({ error: 'Match ID, date, teams, and score are required' }, { status: 400 });
     }
 
     const updatedMatch = await prisma.match.update({
