@@ -1,5 +1,6 @@
-"use client";
+'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -11,7 +12,6 @@ export default function Register() {
   // Handle the form submission for registration
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
-
     const res = await fetch("/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -28,7 +28,16 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-between">
+    <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-between relative">
+
+      {/* Go to Login button */}
+      <div className="absolute top-4 right-4">
+        <Link href="/login">
+          <button className="p-2 bg-yellow-500 text-black font-semibold rounded hover:bg-yellow-600 transition ease-in-out duration-200">
+            Go to Login
+          </button>
+        </Link>
+      </div>
 
       {/* Content in the Centered Half */}
       <main className="flex-grow flex flex-col items-center justify-start text-center pt-20">
@@ -41,7 +50,7 @@ export default function Register() {
           className="mb-0"
         />
         <header className="p-6 text-center">
-        <h1 className="text-5xl font-bold">Register</h1>
+          <h1 className="text-5xl font-bold">Register</h1>
         </header>
 
         <form onSubmit={handleRegister} className="flex flex-col space-y-4 w-full max-w-md">
@@ -80,6 +89,7 @@ export default function Register() {
             Register
           </button>
         </form>
+
         {message && <p className="mt-4">{message}</p>}
       </main>
 
