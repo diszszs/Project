@@ -1,6 +1,5 @@
 'use client'; // Marking this as a client component
 
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 type Match = {
@@ -11,7 +10,6 @@ type Match = {
 };
 
 export default function HomePage() {
-  const [showAuthMenu, setShowAuthMenu] = useState(false); // state to control the visibility of the menu
   const [matches, setMatches] = useState<Match[]>([]); // state to hold matches
 
   // Fetch matches when the page loads
@@ -37,46 +35,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-between">
       {/* Header */}
-      <header className="flex justify-end p-6 space-x-4">
-        {/* News Page Button */}
-        <Link href="/news" passHref>
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
-            News Page
-          </button>
-        </Link>
-
-        <Link href="/united-store" passHref>
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
-            United Store
-          </button>
-        </Link>
-
-        {/* Sign In Button */}
-        <div className="relative">
-          <button
-            className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-gray-600"
-            onClick={() => setShowAuthMenu(!showAuthMenu)} // Toggle menu visibility on button click
-          >
-            Sign In
-          </button>
-
-          {/* Auth Dropdown Menu */}
-          {showAuthMenu && (
-            <div className="absolute top-full right-0 mt-2 w-40 bg-black bg-opacity-90 rounded-md shadow-lg z-10">
-              <Link href="/login" passHref>
-                <button className="w-full text-left px-4 py-2 text-white hover:bg-blue-600 rounded-t-md">
-                  Log In
-                </button>
-              </Link>
-              <Link href="/register" passHref>
-                <button className="w-full text-left px-4 py-2 text-white hover:bg-blue-600 rounded-b-md">
-                  Sign Up
-                </button>
-              </Link>
-            </div>
-          )}
-        </div>
-      </header>
+      <header className="flex justify-end p-6 space-x-4"></header>
 
       <main className="flex-grow flex flex-col items-center justify-start text-center pt-0">
         {/* Logo */}

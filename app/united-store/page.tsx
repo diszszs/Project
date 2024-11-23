@@ -19,12 +19,6 @@ export default function UnitedStore() {
 
       <header className="flex justify-end p-6 space-x-4">
 
-        <Link href="/" passHref>
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-yellow-600">
-            Home
-          </button>
-        </Link>
-
         <Link href="/cart">
           <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-yellow-700">
             Cart ({cartItems.length})
