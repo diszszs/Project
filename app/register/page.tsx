@@ -9,7 +9,6 @@ export default function Register() {
   const [lastName, setLastName] = useState('');
   const [message, setMessage] = useState('');
 
-  // Handle the form submission for registration
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
     const res = await fetch("/api/register", {
@@ -29,8 +28,6 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-between relative">
-
-      {/* Go to Login button */}
       <div className="absolute top-4 right-4">
         <Link href="/login">
           <button className="p-2 bg-yellow-500 text-black font-semibold rounded hover:bg-yellow-600 transition ease-in-out duration-200">
@@ -39,9 +36,7 @@ export default function Register() {
         </Link>
       </div>
 
-      {/* Content in the Centered Half */}
       <main className="flex-grow flex flex-col items-center justify-start text-center pt-20">
-        {/* Logo */}
         <img
           src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg"
           alt="Manchester United Logo"
@@ -93,7 +88,6 @@ export default function Register() {
         {message && <p className="mt-4">{message}</p>}
       </main>
 
-      {/* Footer */}
       <footer className="text-center p-4">
         <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
       </footer>

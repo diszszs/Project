@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import UserNavbar from "./components/UserNavbar";
-import Navbar from "./components/Navbar"; // Import the Navbar
-import { getServerSession } from "next-auth/next"; // For server-side session
+import Navbar from "./components/Navbar"; 
+import { getServerSession } from "next-auth/next"; 
 import "./globals.css";
 
-// Use local fonts
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -23,7 +22,6 @@ export const metadata: Metadata = {
   description: "This is an improved layout for the app",
 };
 
-// Helper to check if the current route is "dashboard"
 function isDashboardPath(pathname: string) {
   return pathname.startsWith("/dashboard");
 }
@@ -36,7 +34,6 @@ export default async function RootLayout({
   const session = await getServerSession();
   const username = session?.user?.name || "Guest";
 
-  // Use server-side pathname extraction
   const pathname =
     typeof window === "undefined" ? "" : window.location.pathname;
 
@@ -48,7 +45,6 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900`}
       >
-        {/* Conditionally render Navbar or UserNavbar */}
         {isDashboardPath(pathname) ? (
           <Navbar userName={username} />
         ) : (

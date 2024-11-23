@@ -15,20 +15,14 @@ export default function Cart() {
 
   const total = cartItems.reduce((sum, item) => sum + item.price, 0);
 
-  // Function to delete an item from the cart
   const deleteItem = (itemToDelete: { name: string, price: number }) => {
     const updatedCart = cartItems.filter(item => item !== itemToDelete);
     setCartItems(updatedCart);
-
-    // Save the updated cart to localStorage
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col">
-
-
-      {/* Cart Section */}
       <main className="flex-grow flex flex-col items-center justify-center text-center py-16">
         <h1 className="text-5xl font-bold mb-8 text-white">Your Cart</h1>
 
@@ -42,7 +36,6 @@ export default function Cart() {
                 <li key={index} className="flex justify-between mb-4">
                   <span>{item.name}</span>
                   <span>฿{item.price}</span>
-                  {/* Delete Button */}
                   <button
                     onClick={() => deleteItem(item)}
                     className="text-red-600 hover:text-red-800"
@@ -64,8 +57,7 @@ export default function Cart() {
           </Link>
         </div>
       </main>
-
-      {/* Footer */}
+      
       <footer className="text-center p-4 mt-auto">
         <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
       </footer>

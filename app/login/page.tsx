@@ -1,20 +1,17 @@
-"use client"; // Marking this as a client component
+"use client"; 
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  // User Login State
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
-  // Admin Login State
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
 
-  // Shared State
   const [message, setMessage] = useState("");
-  const [showAdminForm, setShowAdminForm] = useState(false); // Toggle for admin form
+  const [showAdminForm, setShowAdminForm] = useState(false); 
   const router = useRouter();
 
   async function handleUserLogin(e: React.FormEvent) {
@@ -30,19 +27,17 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok) {
-        // Save token and role in cookies
-        document.cookie = `token=${data.token}; path=/; max-age=3600`; // Token valid for 1 hour
-        document.cookie = `role=${data.role}; path=/; max-age=3600`; // Save role
-        document.cookie = `firstName=${data.firstName}; path=/; max-age=3600`; // Save user's first name
-        document.cookie = `lastName=${data.lastName}; path=/; max-age=3600`; // Save user's last name
+        document.cookie = `token=${data.token}; path=/; max-age=3600`; 
+        document.cookie = `role=${data.role}; path=/; max-age=3600`; 
+        document.cookie = `firstName=${data.firstName}; path=/; max-age=3600`; 
+        document.cookie = `lastName=${data.lastName}; path=/; max-age=3600`; 
 
         setMessage("Login successful!");
 
-        // Redirect based on role
         if (data.role === "admin") {
-          router.push("/dashboard"); // Redirect admin to the dashboard
+          router.push("/dashboard"); 
         } else {
-          router.push("/"); // Redirect normal users to the homepage
+          router.push("/"); 
         }
       } else {
         setMessage(data.error || "Login failed");
@@ -53,7 +48,7 @@ export default function LoginPage() {
   }
 
   async function handleAdminLogin(e: React.FormEvent) {
-    e.preventDefault(); // Prevent page reload on form submission
+    e.preventDefault(); 
 
     try {
       const res = await fetch("/api/login", {
@@ -65,7 +60,6 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok && data.role === "admin") {
-        // Save admin session data
         document.cookie = `token=${data.token}; path=/; max-age=3600`;
         document.cookie = `role=${data.role}; path=/; max-age=3600`;
         document.cookie = `firstName=${data.firstName}; path=/; max-age=3600`;
@@ -82,7 +76,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-center items-center relative">
-      {/* Admin Button */}
       <button
         onClick={() => setShowAdminForm(!showAdminForm)}
         className="absolute top-6 right-6 px-4 py-2 bg-yellow-500 text-black font-semibold rounded hover:bg-yellow-600"
@@ -90,7 +83,6 @@ export default function LoginPage() {
         Admin Login
       </button>
 
-      {/* Admin Login Form */}
       {showAdminForm && (
         <div className="absolute top-20 right-6 bg-black bg-opacity-70 p-6 rounded-md shadow-md w-full max-w-sm">
           <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
@@ -120,7 +112,6 @@ export default function LoginPage() {
         </div>
       )}
 
-      {/* Logo */}
       <img
         src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg"
         alt="Manchester United Logo"
@@ -153,7 +144,6 @@ export default function LoginPage() {
       </form>
       {message && <p className="mt-4 text-lg">{message}</p>}
 
-      {/* Footer */}
       <footer className="text-center p-4 mt-8">
         <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
       </footer>

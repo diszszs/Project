@@ -1,18 +1,17 @@
-'use client'; // Marking this as a client component
+'use client'; 
 
 import { useState, useEffect } from 'react';
 
 type Match = {
   id: number;
-  date: string; // ISO string for the date
+  date: string; 
   teams: string;
   score: string;
 };
 
 export default function HomePage() {
-  const [matches, setMatches] = useState<Match[]>([]); // state to hold matches
+  const [matches, setMatches] = useState<Match[]>([]); 
 
-  // Fetch matches when the page loads
   useEffect(() => {
     async function fetchMatches() {
       try {
@@ -34,11 +33,11 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col justify-between">
-      {/* Header */}
+
       <header className="flex justify-end p-6 space-x-4"></header>
 
       <main className="flex-grow flex flex-col items-center justify-start text-center pt-0">
-        {/* Logo */}
+
         <img
           src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg"
           alt="Manchester United Logo"
@@ -51,7 +50,6 @@ export default function HomePage() {
           Welcome to the ultimate Manchester United fan site! Stay updated with the latest news, manage player info, and more.
         </p>
 
-        {/* Club Overview Section */}
         <section className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
           <h2 className="text-3xl font-semibold mb-4">About Manchester United</h2>
           <div className="flex flex-col items-center justify-center">
@@ -71,7 +69,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Latest Match Score Section */}
         <section className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
           <h2 className="text-3xl font-semibold mb-4">Latest Matches</h2>
           <div className="overflow-x-auto">
@@ -96,12 +93,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Trophies Section */}
         <section className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
           <h2 className="text-3xl font-semibold mb-4">A Legendary Track Record</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Trophies Boxes */}
-            {/* Trophy 1 */}
+
             <div className="bg-white p-4 rounded-lg shadow-lg">
               <img
                 src="https://static0.givemesportimages.com/wordpress/wp-content/uploads/2024/05/manchester-united-fa-cup.jpg"
@@ -111,7 +106,7 @@ export default function HomePage() {
               <h3 className="text-xl font-semibold text-gray-800">Manchester United Trophies</h3>
               <p className="text-gray-600">The Emirates FA Cup winner 2023/24 season!!</p>
             </div>
-            {/* Trophy 2 */}
+
             <div className="bg-white p-4 rounded-lg shadow-lg">
               <img
                 src="https://th.bing.com/th/id/R.36b9ab4e41c8056d334e28f8735986b5?rik=hf6YVR658P5fPg&riu=http%3a%2f%2fplatform-static-files.s3.amazonaws.com%2fpremierleague%2fphoto%2f2016%2f06%2f01%2f0e39ca26-dd5b-4974-920c-60a45b2d65a0%2fman-utd-champions-2007-2008.jpg&ehk=xVgcgqK31p1kxfneyaOndlkDT0bbHvpOuGmtYVJyY8A%3d&risl=&pid=ImgRaw&r=0"
@@ -121,7 +116,7 @@ export default function HomePage() {
               <h3 className="text-xl font-semibold text-gray-800">Premier League Champions</h3>
               <p className="text-gray-600">Manchester United's Premier League 2007/08 victories!</p>
             </div>
-            {/* Trophy 3 */}
+
             <div className="bg-white p-4 rounded-lg shadow-lg">
               <img
                 src="https://th.bing.com/th/id/R.5d525f495a9bcae2a7fc3f5b14e6f6a6?rik=jB1QgEtlkk1HLg&pid=ImgRaw&r=0"
@@ -135,7 +130,6 @@ export default function HomePage() {
         </section>
       </main>
 
-      {/* Footer */}
       <footer className="text-center p-4 mt-auto">
         <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
       </footer>

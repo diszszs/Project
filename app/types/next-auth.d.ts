@@ -4,7 +4,7 @@ declare module 'next-auth' {
   interface User {
     id: string;
     email: string;
-    role: string; // เพิ่ม role เข้ามาใน User interface
+    role: string; 
   }
 
   interface Session {

@@ -6,7 +6,6 @@ import Link from 'next/link';
 export default function UnitedStore() {
   const [cartItems, setCartItems] = useState<{ name: string; price: number }[]>([]);
 
-  // Load cart items from localStorage on the client side
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedCart = localStorage.getItem('cart');
@@ -27,7 +26,7 @@ export default function UnitedStore() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col">
-      {/* Header */}
+
       <header className="flex justify-end p-6 space-x-4">
         <Link href="/cart">
           <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-yellow-700">
@@ -36,13 +35,11 @@ export default function UnitedStore() {
         </Link>
       </header>
 
-      {/* Main Content */}
       <main className="flex-grow flex flex-col items-center justify-center text-center py-16">
         <h1 className="text-5xl font-bold mb-8 text-white">Manchester United Official Store</h1>
 
-        {/* Store Items */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 w-full max-w-7xl">
-          {/* Item 1 */}
+
           <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
             <img
               src="https://mufc-live.cdn.scayle.cloud/images/032465a23bed509d050589e6439809a2.jpg"
@@ -60,7 +57,6 @@ export default function UnitedStore() {
             </button>
           </div>
 
-          {/* Item 2 */}
           <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
             <img
               src="https://mufc-live.cdn.scayle.cloud/images/6324d5baa6aaf2f6110f14523e0d29ce.jpg"
@@ -78,7 +74,6 @@ export default function UnitedStore() {
             </button>
           </div>
 
-          {/* Item 3 */}
           <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
             <img
               src="https://mufc-live.cdn.scayle.cloud/images/9d8b1e35abd676645560a4bce2b86dca.jpg"
@@ -152,7 +147,6 @@ export default function UnitedStore() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="text-center p-4 mt-auto bg-black">
         <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
       </footer>

@@ -15,10 +15,8 @@ const UserNavbar: React.FC<UserNavbarProps> = ({}) => {
 
   return (
     <nav className="flex justify-between items-center px-6 py-4 bg-gradient-to-r from-red-700 to-black text-white shadow-md relative">
-      {/* โลโก้หรือข้อความด้านซ้าย */}
       <div className="text-2xl font-bold">Welcome</div>
 
-      {/* เมนูการทำงานของผู้ใช้งาน */}
       <div className="flex space-x-6 text-sm font-medium">
         <a href="/" className="hover:text-yellow-400 transition duration-300">
           Home
@@ -30,12 +28,11 @@ const UserNavbar: React.FC<UserNavbarProps> = ({}) => {
           United Store
         </a>
 
-        {/* Sign In Dropdown */}
         <div className="relative">
           <a
             href="#"
             onClick={(e) => {
-              e.preventDefault(); // ป้องกันลิงก์ reload หน้า
+              e.preventDefault(); 
               toggleDropdown();
             }}
             className="hover:text-yellow-400 cursor-pointer transition duration-300"

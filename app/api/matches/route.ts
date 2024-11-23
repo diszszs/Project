@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/app/utils/db';
 
-// Fetch all matches
 export async function GET() {
   try {
     const matches = await prisma.match.findMany({
-      orderBy: { date: 'desc' }, // Sort matches by date (latest first)
+      orderBy: { date: 'desc' }, 
     });
     return NextResponse.json(matches);
   } catch (error) {
@@ -13,12 +12,10 @@ export async function GET() {
   }
 }
 
-// Add a new match
 export async function POST(request: Request) {
   try {
     const { date, teams, score } = await request.json();
 
-    // Ensure valid date format
     if (!date || !teams || !score) {
       return NextResponse.json({ error: 'Date, teams, and score are required' }, { status: 400 });
     }
@@ -37,7 +34,6 @@ export async function POST(request: Request) {
   }
 }
 
-// Update an existing match
 export async function PUT(request: Request) {
   try {
     const { id, date, teams, score } = await request.json();
@@ -61,7 +57,6 @@ export async function PUT(request: Request) {
   }
 }
 
-// Delete a match
 export async function DELETE(request: Request) {
   try {
     const { id } = await request.json();

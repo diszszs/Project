@@ -8,7 +8,6 @@ export default function Checkout() {
   const [cartItems, setCartItems] = useState<{ name: string, price: number }[]>([]);
 
   useEffect(() => {
-    // Get the cart items from localStorage
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
       setCartItems(JSON.parse(storedCart));
@@ -26,17 +25,15 @@ export default function Checkout() {
       alert('Please choose a payment method.');
       return;
     }
-    setShowSuccessModal(true); // Show the modal after successful payment
+    setShowSuccessModal(true); 
   };
 
   const closeModal = () => {
-    setShowSuccessModal(false); // Close the modal when the user clicks OK
+    setShowSuccessModal(false); 
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col">
-
-      {/* Checkout Section */}
       <main className="flex-grow flex flex-col items-center justify-center text-center py-16">
         <h1 className="text-5xl font-bold mb-8 text-white">Checkout</h1>
 
@@ -71,10 +68,8 @@ export default function Checkout() {
             </div>
           </div>
 
-          {/* Error message if no payment method is selected */}
           {!paymentMethod && <p className="text-red-500">Please choose a payment method.</p>}
 
-          {/* Total Price Display */}
           <div className="mb-8">
             <p className="text-xl font-semibold">Total Price: ฿{total}</p>
           </div>
@@ -88,7 +83,6 @@ export default function Checkout() {
         </div>
       </main>
 
-      {/* Success Modal */}
       {showSuccessModal && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
           <div className="bg-white p-8 rounded-lg shadow-xl w-96">
@@ -106,7 +100,6 @@ export default function Checkout() {
         </div>
       )}
 
-      {/* Footer */}
       <footer className="text-center p-4 mt-auto">
         <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
       </footer>

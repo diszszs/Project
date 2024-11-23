@@ -12,25 +12,21 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Validate input with Zod
     const { email, password } = loginSchema.parse(body);
 
-    // Check if user exists
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Verify password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
 
-    // Return user data with role
     return NextResponse.json({
       message: "Login successful",
-      token: "your-session-token", // Replace this with your token logic
+      token: "your-session-token",
       role: user.role,
       firstName: user.firstName,
       lastName: user.lastName,

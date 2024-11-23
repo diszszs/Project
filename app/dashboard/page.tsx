@@ -106,7 +106,7 @@ export default function Dashboard() {
 
       if (res.ok) {
         setMessage("Match deleted successfully!");
-        setMatches((prev) => prev.filter((match) => match.id !== id)); // Remove from UI
+        setMatches((prev) => prev.filter((match) => match.id !== id)); 
       } else {
         setMessage("Failed to delete match");
       }
@@ -121,7 +121,6 @@ export default function Dashboard() {
       <main className="flex-grow container mx-auto p-6">
         <h1 className="text-4xl font-bold text-gray-800 mb-6">Dashboard</h1>
 
-        {/* Add Match Form */}
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Add Match</h2>
           <form onSubmit={handleAddMatch} className="space-y-4">
@@ -157,7 +156,6 @@ export default function Dashboard() {
           </form>
         </section>
 
-        {/* Matches List */}
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Manage Matches</h2>
           <ul className="space-y-4">
@@ -196,7 +194,6 @@ export default function Dashboard() {
           </ul>
         </section>
 
-        {/* Edit Match Form */}
         {editingMatch && (
           <section className="bg-white shadow-md rounded-lg p-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Edit Match</h2>

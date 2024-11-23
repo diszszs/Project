@@ -10,7 +10,6 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      {/* Use Dashboard-specific Navbar */}
       <Navbar userName="Admin" />
       <main className="flex-grow container mx-auto p-6">{children}</main>
       <Footer />
