@@ -1,16 +1,14 @@
-"use client"; // บอก Next.js ว่านี่คือ Client Component
+"use client"; 
 
 import React, { useState } from "react";
 
 interface UserNavbarProps {
-  username: string; // ชื่อผู้ใช้ที่ล็อกอิน
+  username: string; 
 }
 
-const UserNavbar: React.FC<UserNavbarProps> = ({ username }) => {
-  // State สำหรับจัดการการแสดงผลเมนู Dropdown
+const UserNavbar: React.FC<UserNavbarProps> = ({}) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
-  // ฟังก์ชันสำหรับจัดการ Dropdown
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
@@ -18,7 +16,7 @@ const UserNavbar: React.FC<UserNavbarProps> = ({ username }) => {
   return (
     <nav className="flex justify-between items-center px-6 py-4 bg-gradient-to-r from-red-700 to-black text-white shadow-md relative">
       {/* โลโก้หรือข้อความด้านซ้าย */}
-      <div className="text-lg font-bold">Welcome, {username}</div>
+      <div className="text-2xl font-bold">Welcome</div>
 
       {/* เมนูการทำงานของผู้ใช้งาน */}
       <div className="flex space-x-6 text-sm font-medium">

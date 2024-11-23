@@ -1,7 +1,6 @@
-'use client'; // Marking this as a client component
+'use client'; 
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 
 export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState('');
@@ -36,14 +35,6 @@ export default function Checkout() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col">
-      {/* Header */}
-      <header className="flex justify-end p-6 space-x-4">
-        <Link href="/" passHref>
-          <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-yellow-600">
-            Home
-          </button>
-        </Link>
-      </header>
 
       {/* Checkout Section */}
       <main className="flex-grow flex flex-col items-center justify-center text-center py-16">

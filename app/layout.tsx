@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import UserNavbar from "./components/UserNavbar"; // ใช้ UserNavbar
-import { getServerSession } from "next-auth/next"; // ใช้สำหรับดึง Session
+import UserNavbar from "./components/UserNavbar";
+import Navbar from "./components/Navbar"; // Import the Navbar
+import { getServerSession } from "next-auth/next"; // For server-side session
 import "./globals.css";
 
+// Use local fonts
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -21,14 +23,22 @@ export const metadata: Metadata = {
   description: "This is an improved layout for the app",
 };
 
+// Helper to check if the current route is "dashboard"
+function isDashboardPath(pathname: string) {
+  return pathname.startsWith("/dashboard");
+}
+
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // ดึง Session เพื่อรับชื่อผู้ใช้
   const session = await getServerSession();
-  const username = session?.user?.name || "Guest"; // ใช้ "Guest" หากไม่มีข้อมูล Session
+  const username = session?.user?.name || "Guest";
+
+  // Use server-side pathname extraction
+  const pathname =
+    typeof window === "undefined" ? "" : window.location.pathname;
 
   return (
     <html lang="en">
@@ -38,12 +48,15 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900`}
       >
-        {/* ส่ง username ไปยัง UserNavbar */}
-        <UserNavbar username={username} />
-        <main className="min-h-screen flex flex-col">
-          {children}
-        </main>
+        {/* Conditionally render Navbar or UserNavbar */}
+        {isDashboardPath(pathname) ? (
+          <Navbar userName={username} />
+        ) : (
+          <UserNavbar username={username} />
+        )}
+        <main className="min-h-screen flex flex-col">{children}</main>
       </body>
     </html>
   );
 }
+    

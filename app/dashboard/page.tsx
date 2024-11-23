@@ -1,8 +1,6 @@
 "use client";
 
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 type Match = {
   id: number;
@@ -14,25 +12,25 @@ type Match = {
 export default function Dashboard() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [editingMatch, setEditingMatch] = useState<Match | null>(null);
-  const [date, setDate] = useState('');
-  const [teams, setTeams] = useState('');
-  const [score, setScore] = useState('');
-  const [message, setMessage] = useState('');
+  const [date, setDate] = useState("");
+  const [teams, setTeams] = useState("");
+  const [score, setScore] = useState("");
+  const [message, setMessage] = useState("");
 
   // Fetch matches on page load
   useEffect(() => {
     async function fetchMatches() {
       try {
-        const res = await fetch('/api/matches');
+        const res = await fetch("/api/matches");
         const data = await res.json();
 
         if (res.ok) {
           setMatches(data);
         } else {
-          console.error('Failed to fetch matches');
+          console.error("Failed to fetch matches");
         }
       } catch (error) {
-        console.error('Error fetching matches:', error);
+        console.error("Error fetching matches:", error);
       }
     }
 
@@ -44,25 +42,25 @@ export default function Dashboard() {
     e.preventDefault();
 
     try {
-      const res = await fetch('/api/matches', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/matches", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ date, teams, score }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        setMessage('Match added successfully!');
+        setMessage("Match added successfully!");
         setMatches((prev) => [...prev, data.match]);
-        setDate('');
-        setTeams('');
-        setScore('');
+        setDate("");
+        setTeams("");
+        setScore("");
       } else {
-        setMessage('Failed to add match');
+        setMessage("Failed to add match");
       }
     } catch (error) {
-      setMessage('Something went wrong. Please try again.');
+      setMessage("Something went wrong. Please try again.");
     }
   }
 
@@ -73,62 +71,52 @@ export default function Dashboard() {
     if (!editingMatch) return;
 
     try {
-      const res = await fetch('/api/matches', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/matches", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editingMatch),
       });
 
       const updatedMatch = await res.json();
 
       if (res.ok) {
-        setMessage('Match updated successfully!');
+        setMessage("Match updated successfully!");
         setMatches((prev) =>
-          prev.map((match) => (match.id === updatedMatch.id ? updatedMatch : match))
+          prev.map((match) =>
+            match.id === updatedMatch.id ? updatedMatch : match
+          )
         );
         setEditingMatch(null);
       } else {
-        setMessage('Failed to update match');
+        setMessage("Failed to update match");
       }
     } catch (error) {
-      setMessage('Something went wrong. Please try again.');
+      setMessage("Something went wrong. Please try again.");
     }
   }
 
   // Delete a match
   async function handleDeleteMatch(id: number) {
     try {
-      const res = await fetch('/api/matches', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/matches", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
       });
 
       if (res.ok) {
-        setMessage('Match deleted successfully!');
+        setMessage("Match deleted successfully!");
         setMatches((prev) => prev.filter((match) => match.id !== id)); // Remove from UI
       } else {
-        setMessage('Failed to delete match');
+        setMessage("Failed to delete match");
       }
     } catch (error) {
-      setMessage('Something went wrong. Please try again.');
+      setMessage("Something went wrong. Please try again.");
     }
   }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      {/* Navbar */}
-      <Navbar userName="Admin" />
-
-      {/* Home Button */}
-      <div className="flex justify-start p-6">
-        <a
-          href="/"
-          className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition"
-        >
-          Home
-        </a>
-      </div>
 
       <main className="flex-grow container mx-auto p-6">
         <h1 className="text-4xl font-bold text-gray-800 mb-6">Dashboard</h1>
@@ -178,7 +166,8 @@ export default function Dashboard() {
                 <div className="flex justify-between items-center">
                   <div>
                     <p>
-                      <strong>Date:</strong> {new Date(match.date).toLocaleDateString()}
+                      <strong>Date:</strong>{" "}
+                      {new Date(match.date).toLocaleDateString()}
                     </p>
                     <p>
                       <strong>Teams:</strong> {match.teams}
@@ -214,7 +203,9 @@ export default function Dashboard() {
             <form onSubmit={handleUpdateMatch} className="space-y-4">
               <input
                 type="date"
-                value={new Date(editingMatch.date).toISOString().split('T')[0]}
+                value={new Date(editingMatch.date)
+                  .toISOString()
+                  .split("T")[0]}
                 onChange={(e) =>
                   setEditingMatch({ ...editingMatch, date: e.target.value })
                 }
@@ -260,7 +251,6 @@ export default function Dashboard() {
           </section>
         )}
       </main>
-      <Footer />
     </div>
   );
 }

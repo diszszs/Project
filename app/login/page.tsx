@@ -1,19 +1,19 @@
 "use client"; // Marking this as a client component
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   // User Login State
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
   // Admin Login State
-  const [adminEmail, setAdminEmail] = useState('');
-  const [adminPassword, setAdminPassword] = useState('');
+  const [adminEmail, setAdminEmail] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
 
   // Shared State
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [showAdminForm, setShowAdminForm] = useState(false); // Toggle for admin form
   const router = useRouter();
 
@@ -21,9 +21,9 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: userEmail, password: userPassword }),
       });
 
@@ -36,19 +36,19 @@ export default function LoginPage() {
         document.cookie = `firstName=${data.firstName}; path=/; max-age=3600`; // Save user's first name
         document.cookie = `lastName=${data.lastName}; path=/; max-age=3600`; // Save user's last name
 
-        setMessage('Login successful!');
+        setMessage("Login successful!");
 
         // Redirect based on role
-        if (data.role === 'admin') {
-          router.push('/dashboard'); // Redirect admin to the dashboard
+        if (data.role === "admin") {
+          router.push("/dashboard"); // Redirect admin to the dashboard
         } else {
-          router.push('/'); // Redirect normal users to the homepage
+          router.push("/"); // Redirect normal users to the homepage
         }
       } else {
-        setMessage(data.error || 'Login failed');
+        setMessage(data.error || "Login failed");
       }
     } catch (error) {
-      setMessage('Something went wrong. Please try again.');
+      setMessage("Something went wrong. Please try again.");
     }
   }
 
@@ -56,22 +56,27 @@ export default function LoginPage() {
     e.preventDefault(); // Prevent page reload on form submission
 
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: adminEmail, password: adminPassword }),
       });
 
       const data = await res.json();
 
-      if (res.ok && data.role === 'admin') {
-        // Redirect to dashboard if the role is admin
-        router.push('/dashboard');
+      if (res.ok && data.role === "admin") {
+        // Save admin session data
+        document.cookie = `token=${data.token}; path=/; max-age=3600`;
+        document.cookie = `role=${data.role}; path=/; max-age=3600`;
+        document.cookie = `firstName=${data.firstName}; path=/; max-age=3600`;
+        document.cookie = `lastName=${data.lastName}; path=/; max-age=3600`;
+
+        router.push("/dashboard");
       } else {
-        setMessage('Only admin can access this page');
+        setMessage("Only admin can access this page");
       }
     } catch (error) {
-      setMessage('Something went wrong. Please try again.');
+      setMessage("Something went wrong. Please try again.");
     }
   }
 
