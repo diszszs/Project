@@ -1,39 +1,40 @@
-import { NextResponse } from "next/server";
-import prisma from "@/app/utils/db"; // Ensure the correct path to your db connection
-import bcrypt from "bcryptjs"; // For comparing hashed passwords
-import { generateToken } from "@/app/utils/jwt"; // JWT utility
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import prisma from '@/app/lib/prisma';
+import bcrypt from 'bcrypt';
 
-export async function POST(request: Request) {
-  const { email, password } = await request.json();
+const loginSchema = z.object({
+  email: z.string().email('Invalid email format'),
+  password: z.string().min(6, 'Password must be at least 6 characters long'),
+});
 
+export async function POST(req: Request) {
   try {
-    // Retrieve the user by email
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
+    const body = await req.json();
 
+    // Validate input with Zod
+    const { email, password } = loginSchema.parse(body);
+
+    // Check if user exists
+    const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // Compare the entered password with the hashed password stored in the database
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return NextResponse.json({ error: "Invalid credentials" }, { status: 400 });
+    // Verify password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    // Generate JWT token
-    const token = generateToken(user);
+    // Generate session token (example only, adjust as needed)
+    const token = 'your-session-token'; // Replace this with a real token generation method
 
-    // Return role to determine access level
-    return NextResponse.json({
-      message: "Login successful",
-      token,
-      role: user.role, // Send the user's role
-      firstName: user.firstName, // Include first name
-      lastName: user.lastName, // Include last name
-    });
+    return NextResponse.json({ message: 'Login successful', token }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: "Login failed" }, { status: 500 });
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.errors }, { status: 400 });
+    }
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

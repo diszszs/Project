@@ -20,7 +20,16 @@ export async function GET() {
          'https://i2-prod.mirror.co.uk/incoming/article34157838.ece/ALTERNATES/s1200d/0_GettyImages-2184772571.jpg',
         pubDate: '2024-11-20',
     },
+    {
+      title: "Man United manager Ruben Amorim is “stunned” with what he has seen in training",
+      description:
+       "Ruben Amorim has taken charge of Manchester United who are currently 13th in the Premier League standings. The Red Devils have struggled massively this season and the Portuguese manager has an enormous job at Old Trafford. He is taking charge of the club that has struggled to perform well for a number of years and [...]The post Man United manager Ruben Amorim is “stunned” with what he has seen in training appeared first on CaughtOffside.",
+      link: 'https://www.caughtoffside.com/2024/11/22/man-united-ruben-amorim-stunned/',
+      image_url:
+       'https://icdn.caughtoffside.com/wp-content/uploads/2024/11/Ruben-Amorim-Man-United-2-900x620.jpg',
+      pubDate: '2024-11-22',
+  },
   ];
 
-  return NextResponse.json(mockArticle); // Return mock data as response
+  return NextResponse.json(mockArticle); 
 }
