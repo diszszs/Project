@@ -9,6 +9,19 @@ type Match = {
   score: string;
 };
 
+const handleLogout = async () => {
+  try {
+    const response = await fetch("/api/logout", { method: "POST" });
+    if (response.ok) {
+      window.location.href = "/";
+    } else {
+      console.error("Logout failed");
+    }
+  } catch (error) {
+    console.error("An error occurred during logout:", error);
+  }
+};
+
 export default function Dashboard() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [editingMatch, setEditingMatch] = useState<Match | null>(null);
@@ -17,7 +30,6 @@ export default function Dashboard() {
   const [score, setScore] = useState("");
   const [message, setMessage] = useState("");
 
-  // Fetch matches on page load
   useEffect(() => {
     async function fetchMatches() {
       try {
@@ -37,10 +49,8 @@ export default function Dashboard() {
     fetchMatches();
   }, []);
 
-  // Add a new match
   async function handleAddMatch(e: React.FormEvent) {
     e.preventDefault();
-
     try {
       const res = await fetch("/api/matches", {
         method: "POST",
@@ -64,7 +74,6 @@ export default function Dashboard() {
     }
   }
 
-  // Update a match
   async function handleUpdateMatch(e: React.FormEvent) {
     e.preventDefault();
 
@@ -95,7 +104,6 @@ export default function Dashboard() {
     }
   }
 
-  // Delete a match
   async function handleDeleteMatch(id: number) {
     try {
       const res = await fetch("/api/matches", {
@@ -106,7 +114,7 @@ export default function Dashboard() {
 
       if (res.ok) {
         setMessage("Match deleted successfully!");
-        setMatches((prev) => prev.filter((match) => match.id !== id)); 
+        setMatches((prev) => prev.filter((match) => match.id !== id));
       } else {
         setMessage("Failed to delete match");
       }
@@ -117,10 +125,19 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-
       <main className="flex-grow container mx-auto p-6">
-        <h1 className="text-4xl font-bold text-gray-800 mb-6">Dashboard</h1>
+        {/* Header Section */}
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-4xl font-bold text-gray-800">Dashboard</h1>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          >
+            Logout
+          </button>
+        </div>
 
+        {/* Add Match Section */}
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Add Match</h2>
           <form onSubmit={handleAddMatch} className="space-y-4">
@@ -156,6 +173,7 @@ export default function Dashboard() {
           </form>
         </section>
 
+        {/* Manage Matches Section */}
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Manage Matches</h2>
           <ul className="space-y-4">
