@@ -1,11 +1,13 @@
-'use client'; 
+'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [cartItems, setCartItems] = useState<{ name: string, price: number }[]>([]);
+  const [cartItems, setCartItems] = useState<{ name: string; price: number; image: string }[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const storedCart = localStorage.getItem('cart');
@@ -25,11 +27,17 @@ export default function Checkout() {
       alert('Please choose a payment method.');
       return;
     }
-    setShowSuccessModal(true); 
+
+    // Clear cart after successful payment
+    localStorage.removeItem('cart');
+    setCartItems([]);
+    setShowSuccessModal(true);
   };
 
   const closeModal = () => {
-    setShowSuccessModal(false); 
+    setShowSuccessModal(false);
+    // Redirect user to cart or store for a new order
+    router.push('/united-store');
   };
 
   return (

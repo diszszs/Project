@@ -1,10 +1,12 @@
-'use client'; 
+'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState<{ name: string, price: number }[]>([]);
+  const [cartItems, setCartItems] = useState<
+    { name: string; price: number; image: string }[]
+  >([]);
 
   useEffect(() => {
     const storedCart = localStorage.getItem('cart');
@@ -13,29 +15,42 @@ export default function Cart() {
     }
   }, []);
 
-  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
-
-  const deleteItem = (itemToDelete: { name: string, price: number }) => {
-    const updatedCart = cartItems.filter(item => item !== itemToDelete);
+  const deleteItem = (itemToDelete: { name: string; price: number; image: string }) => {
+    const updatedCart = cartItems.filter((item) => item.name !== itemToDelete.name);
     setCartItems(updatedCart);
+
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
+  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-900 to-black text-white flex flex-col">
-      <main className="flex-grow flex flex-col items-center justify-center text-center py-16">
-        <h1 className="text-5xl font-bold mb-8 text-white">Your Cart</h1>
+      <main className="flex-grow flex flex-col items-center justify-center py-16">
+        <h1 className="text-5xl font-bold mb-8">Your Cart</h1>
 
-        <div className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg text-white mb-8">
-          <h2 className="text-3xl font-semibold mb-4">Items in Cart</h2>
-          <ul className="list-none mb-8">
-            {cartItems.length === 0 ? (
-              <p className="text-white">Your cart is empty.</p>
-            ) : (
-              cartItems.map((item, index) => (
-                <li key={index} className="flex justify-between mb-4">
-                  <span>{item.name}</span>
-                  <span>฿{item.price}</span>
+        <div className="w-full max-w-4xl p-6 bg-black bg-opacity-70 rounded-lg">
+          {cartItems.length === 0 ? (
+            <p className="text-xl">Your cart is empty.</p>
+          ) : (
+            <ul className="space-y-6">
+              {cartItems.map((item, index) => (
+                <li
+                  key={index}
+                  className="flex items-center justify-between p-4 bg-white rounded-lg shadow"
+                >
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-16 h-16 object-cover rounded"
+                    />
+                    <div>
+                      <p className="text-lg font-semibold text-gray-800">{item.name}</p>
+                      <p className="text-yellow-400 font-semibold">฿{item.price.toFixed(2)}</p>
+                    </div>
+                  </div>
+
                   <button
                     onClick={() => deleteItem(item)}
                     className="text-red-600 hover:text-red-800"
@@ -43,24 +58,22 @@ export default function Cart() {
                     Delete
                   </button>
                 </li>
-              ))
-            )}
-          </ul>
-          <div className="flex justify-between mb-8">
-            <span className="text-xl font-semibold">Total:</span>
-            <span className="text-xl font-semibold text-yellow-400">฿{total}</span>
+              ))}
+            </ul>
+          )}
+
+          <div className="flex justify-between mt-8 text-lg font-semibold">
+            <span>Total:</span>
+            <span className="text-yellow-400">฿{total.toFixed(2)}</span>
           </div>
+
           <Link href="/checkout">
-            <button className="w-full py-3 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition duration-300 ease-in-out transform hover:scale-105">
+            <button className="mt-6 w-full py-3 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition duration-300">
               Proceed to Checkout
             </button>
           </Link>
         </div>
       </main>
-      
-      <footer className="text-center p-4 mt-auto">
-        <p>&copy; 2024 Manchester United Fan Page. All rights reserved.</p>
-      </footer>
     </div>
   );
 }
